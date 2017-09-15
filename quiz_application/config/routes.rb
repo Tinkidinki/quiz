@@ -1,4 +1,6 @@
 Rails.application.routes.draw do
+
+  root "pages#show", page: "home"
   
   controller :sessions do
     get 'login' => :new
