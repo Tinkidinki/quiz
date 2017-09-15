@@ -9,6 +9,9 @@
   </head>
 
   <body>
+    <p>
+      Welcome <%=session[:user_name]%>
+    </p>
     <%= yield %>
   </body>
 </html>
