@@ -10,6 +10,8 @@ class QuizzesController < ApplicationController
   # GET /quizzes/1
   # GET /quizzes/1.json
   def show
+    @questions = Question.where(quiz_id: params[:id])
+    #@questions = Question.all
   end
 
   # GET /quizzes/new
