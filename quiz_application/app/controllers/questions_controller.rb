@@ -14,6 +14,10 @@ class QuestionsController < ApplicationController
   def show
   end
 
+  # GET /save_question_attempt
+  def save_question_attempt
+  end
+
   # GET /questions/new
   def new
     @question = Question.new

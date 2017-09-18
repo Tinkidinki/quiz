@@ -1,0 +1,33 @@
+<p id="notice"><%= notice %></p>
+
+<p>
+  <strong>Genre:</strong>
+  <%= @quiz.genre %>
+</p>
+
+<p>
+  <strong>Sub genre:</strong>
+  <%= @quiz.sub_genre %>
+</p>
+
+
+<%= @questions.each do |question|%>
+  <%= form_tag(url_for_options: {controller: 'question' ,action: 'save_question_attempt'} ,options: {method: 'get'}) do%>
+    <%= label_tag question.question_statement%>
+
+    <%= label_tag question.option_1%>
+    <%= check_box_tag 'option_1'%> 
+
+    <%= label_tag question.option_2%>
+    <%= check_box_tag 'option_2'%>
+
+    <%= label_tag question.option_3%>
+    <%= check_box_tag 'option_3'%>
+
+    <%= label_tag question.option_1%>
+    <%= check_box_tag 'option_4'%> 
+  
+  <%end%>
+<%end%>
+
+  
