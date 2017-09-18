@@ -16,13 +16,14 @@ class QuestionsController < ApplicationController
 
   # GET /save_question_attempt
   def save_question_attempt
-    @question = Question.where(id: params[:id]).first
-    @user = User.where(id: session[:user_id]).first
+	@question_id = params[:id]
+	@question = Question.where(id: @question_id).first
+    @user_id = session[:user_id]
     @quiz_id = @question.quiz_id
 
     @question_attempt = QuestionAttempt.new
-    @question_attempt.question_id = @question
-    @question_attempt.user_id = @user
+    @question_attempt.question_id = @question_id
+    @question_attempt.user_id = @user_id
 
     @user_options = []
 

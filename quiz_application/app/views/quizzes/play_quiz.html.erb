@@ -12,23 +12,32 @@
 
 
 <%= @questions.each do |question|%>
+  <% @question_attempt = QuestionAttempt.where(question_id: question.id, user_id: session[:user_id]).first%>
+  <% if @question_attempt
+        @user_options = eval @question_attempt.user_options
+    else
+      @user_options = []
+
+    end %>
   <!--%= form_tag(url_for_options: {controller: "questions" ,action: "save_question_attempt"} ,options: {method: "get"}) do%-->
   <%= form_tag( save_question_attempt_path(id: question.id),{method: 'get'}) do %>
     <%= label_tag question.question_statement%>
 
     <%= label_tag question.option_1%>
-    <%= check_box_tag 'option_1'%> 
+    <%= check_box_tag 'option_1','1',@user_options.include?(1)%> 
 
     <%= label_tag question.option_2%>
-    <%= check_box_tag 'option_2'%>
+    <%= check_box_tag 'option_2',2,@user_options.include?(2)%>
 
     <%= label_tag question.option_3%>
-    <%= check_box_tag 'option_3'%>
+    <%= check_box_tag 'option_3',3,@user_options.include?(3)%>
 
     <%= label_tag question.option_4%>
-    <%= check_box_tag 'option_4'%> 
+    <%= check_box_tag 'option_4',4,@user_options.include?(4)%> 
 
+    <% if @user_options.empty? %>
     <%= submit_tag 'Submit'%>
+    <%end%>
   
   <%end%>
 <%end%>
