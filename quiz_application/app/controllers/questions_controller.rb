@@ -16,7 +16,38 @@ class QuestionsController < ApplicationController
 
   # GET /save_question_attempt
   def save_question_attempt
-  end
+    @question = Question.where(id: params[:id]).first
+    @user = User.where(id: session[:user_id]).first
+    @quiz_id = @question.quiz_id
+
+    @question_attempt = QuestionAttempt.new
+    @question_attempt.question_id = @question
+    @question_attempt.user_id = @user
+
+    @user_options = []
+
+    if params[:option_1]
+      @user_options << 1
+    end
+
+    if params[:option_2]
+      @user_options << 2
+    end
+     
+    if params[:option_3]
+      @user_options << 3
+    end
+
+    if params[:option_4]
+      @user_options << 4
+    end
+  
+		@question_attempt.user_options = @user_options
+		@question_attempt.save
+
+		redirect_to play_quiz_path(id: @quiz_id)
+	end
+
 
   # GET /questions/new
   def new
