@@ -16,7 +16,7 @@
       <tr>
         <td><%= quiz.genre %></td>
         <td><%= quiz.sub_genre %></td>
-        <td><%= link_to 'Play!', url_for(controller: 'quiz', action: 'play_quiz'), method %></td>
+        <td><%= link_to 'Play!', url_for(controller: 'quizzes', action: 'play_quiz', id: quiz.id), method: 'get' %></td>
         <td><%= link_to 'Edit', edit_quiz_path(quiz) %></td>
         <td><%= link_to 'Destroy', quiz, method: :delete, data: { confirm: 'Are you sure?' } %></td>
       </tr>

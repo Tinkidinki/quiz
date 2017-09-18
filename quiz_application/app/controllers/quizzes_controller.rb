@@ -9,6 +9,7 @@ class QuizzesController < ApplicationController
 
   #GET /play_quiz
   def play_quiz
+    @quiz = Quiz.where(id: params[:id]).first
     @questions = Question.where(quiz_id: params[:id])
     @quiz_attempt = QuizAttempt.new(quiz_id: params[:id] ,user_id: session[:user_id])
     @quiz_attempt.save

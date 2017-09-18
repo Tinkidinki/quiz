@@ -15,6 +15,6 @@ Rails.application.routes.draw do
   #Non scaffolded routes
 
   get '/save_question_attempt' , to: 'question#save_question_attempt'
-  get '/play_quiz/', to: 'quizzes#play_quiz'
+  get "/play_quiz/:id", to: 'quizzes#play_quiz'
   # For details on the DSL available within this file, see http://guides.rubyonrails.org/routing.html
 end
