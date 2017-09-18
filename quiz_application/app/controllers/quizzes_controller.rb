@@ -11,6 +11,8 @@ class QuizzesController < ApplicationController
   # GET /quizzes/1.json
   def show
     @questions = Question.where(quiz_id: params[:id])
+    @quiz_attempt = QuizAttempt.new(quiz_id: params[:id] ,user_id: session[:user_id])
+    @quiz_attempt.save
     #@questions = Question.all
   end
 
