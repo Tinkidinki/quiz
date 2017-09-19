@@ -11,9 +11,32 @@ class QuizzesController < ApplicationController
   def play_quiz
     @quiz = Quiz.where(id: params[:id]).first
     @questions = Question.where(quiz_id: params[:id])
-    @quiz_attempt = QuizAttempt.new(quiz_id: params[:id] ,user_id: session[:user_id])
-    @quiz_attempt.save
+    @quiz_attempt = QuizAttempt.where(quiz_id: @quiz.id, user_id: session[:user_id]).first
+    if not @quiz_attempt
+      @quiz_attempt = QuizAttempt.new(quiz_id: params[:id] ,user_id: session[:user_id])
+      @quiz_attempt.score = 0
+      @quiz_attempt.save
+    end
     #@questions = Question.all
+  end
+
+  #GET /score/<QuizAttempt_id>
+  def score
+    @quiz_attempt_id = params[:id]
+    @user_id = session[:user_id]
+    @quiz_attempt = QuizAttempt.find_by(id: @quiz_attempt_id)
+    @quiz_id = @quiz_attempt.quiz_id
+    @question_attempts = QuestionAttempt.joins(:question).where(questions: {quiz_id: @quiz_id}, user_id: @user_id).all
+
+    @quiz_attempt.score = 0
+    #validating the answers
+    @question_attempts.each do |question_attempt|
+      if eval(question_attempt.user_options).sort == eval(question_attempt.question.correct_options).sort
+        @quiz_attempt.score +=1 
+      end
+    end
+
+    @quiz_attempt.save
   end
 
   # GET /quizzes/new
