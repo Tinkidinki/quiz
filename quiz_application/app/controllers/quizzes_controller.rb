@@ -7,14 +7,13 @@ class QuizzesController < ApplicationController
     @quizzes = Quiz.all
   end
 
-  #GET /play_quiz
+  #GET /play_quiz/quiz_id
   def play_quiz
     @quiz = Quiz.where(id: params[:id]).first
     @questions = Question.where(quiz_id: params[:id])
     @quiz_attempt = QuizAttempt.where(quiz_id: @quiz.id, user_id: session[:user_id]).first
     if not @quiz_attempt
       @quiz_attempt = QuizAttempt.new(quiz_id: params[:id] ,user_id: session[:user_id])
-      @quiz_attempt.score = 0
       @quiz_attempt.save
     end
     #@questions = Question.all
@@ -37,6 +36,16 @@ class QuizzesController < ApplicationController
     end
 
     @quiz_attempt.save
+
+    respond_to do |format|
+      format.html{ redirect_to play_quiz_path(@quiz_id, done: true), notice: "You are done!Your score is #{@quiz_attempt.score}"}
+    end
+  end
+
+  #GET "/leaderboard/<quiz_id>"
+  def leaderboard
+    @quiz_id = params[:id]
+    @quiz_attempts = QuizAttempt.order('score desc').where(quiz_id: @quiz_id)
   end
 
   # GET /quizzes/new

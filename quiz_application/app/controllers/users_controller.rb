@@ -28,6 +28,10 @@ class UsersController < ApplicationController
 
     respond_to do |format|
       if @user.save
+        @user.total_score = 0
+        @user.admin = false
+        @user.save
+
         format.html { redirect_to @user, notice: 'User was successfully created.' }
         format.json { render :show, status: :created, location: @user }
       else

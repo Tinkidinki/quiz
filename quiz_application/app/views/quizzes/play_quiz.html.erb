@@ -22,9 +22,13 @@
   <!--%= form_tag(url_for_options: {controller: "questions" ,action: "save_question_attempt"} ,options: {method: "get"}) do%-->
   <%= form_tag( save_question_attempt_path(id: question.id),{method: 'get'}) do %>
     <%= label_tag question.question_statement%>
+    <% if params[:done]%>
+      CORRECT OPTION: <%= question.correct_options %>
+      <br/>
+    <% end %>
 
     <%= label_tag question.option_1%>
-    <%= check_box_tag 'option_1','1',@user_options.include?(1)%> 
+    <%= check_box_tag 'option_1',1,@user_options.include?(1)%> 
 
     <%= label_tag question.option_2%>
     <%= check_box_tag 'option_2',2,@user_options.include?(2)%>
@@ -42,7 +46,7 @@
   <%end%>
 <%end%>
 
-<%=button_to("Pause" , quizzes_path ,method: "get" ) %>
+<%=button_to("Back" , quizzes_path ,method: "get" ) %>
 <%=button_to("Done" , score_path(@quiz_attempt) ,method: "get" ) %>
 
   

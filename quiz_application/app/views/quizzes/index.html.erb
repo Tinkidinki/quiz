@@ -7,18 +7,51 @@
     <tr>
       <th>Genre</th>
       <th>Sub genre</th>
+      <th>Attempted</th>
+      <th>Finished</th>
+      <th>Score</th>
       <th colspan="3"></th>
     </tr>
   </thead>
 
   <tbody>
     <% @quizzes.each do |quiz| %>
+    <% @user = User.find_by(id: session[:user_id])%>
+    <% @quiz_attempt = QuizAttempt.find_by(user_id: @user.id, quiz_id: quiz.id)%>
+    <% @score = "-"%>
+    
+
+    <% if @quiz_attempt %>
+
+      <%if @quiz_attempt.score%>
+        <% @finished = "Yes"%>
+        <% @attempted = "Yes"%>
+        <% @score = @quiz_attempt.score%>
+    
+      <% else %>
+        <% @finished = "No"%>
+        <% @attempted = "Yes"%>
+      <% end %>
+
+    <% else %>
+      <% @finished = "No"%>
+      <% @attempted = "No"%>
+
+    <% end %>
+
       <tr>
         <td><%= quiz.genre %></td>
         <td><%= quiz.sub_genre %></td>
+        <td><%= @attempted%></td>
+        <td><%= @finished%></td>
+        <td><%= @score%> </td>
+        
         <td><%= link_to 'Play!', url_for(controller: 'quizzes', action: 'play_quiz', id: quiz.id), method: 'get' %></td>
-        <td><%= link_to 'Edit', edit_quiz_path(quiz) %></td>
-        <td><%= link_to 'Destroy', quiz, method: :delete, data: { confirm: 'Are you sure?' } %></td>
+        <td><%= link_to 'Leaderboard', leaderboard_path(quiz.id), method: 'get' %></td>
+        <% if @user.admin? %>
+          <td><%= link_to 'Edit', edit_quiz_path(quiz) %></td>
+          <td><%= link_to 'Destroy', quiz, method: :delete, data: { confirm: 'Are you sure?' } %></td>
+        <% end %>   
       </tr>
     <% end %>
   </tbody>
@@ -26,5 +59,7 @@
 
 <br>
 
-<%= link_to 'New Quiz', new_quiz_path %>
+<% if @user.admin? %>
+  <%= link_to 'New Quiz', new_quiz_path %>
+<% end %>
 <%= button_to('Logout', '/logout', method:'delete')%>

@@ -4,7 +4,7 @@ class QuestionsController < ApplicationController
   # GET /questions
   # GET /questions.json
   def index
-    @questions = Question.all
+    @questions = Question.where(quiz_id: params[:id])
   end
 
   
@@ -12,6 +12,8 @@ class QuestionsController < ApplicationController
   # GET /questions/1
   # GET /questions/1.json
   def show
+	@question = Question.find_by(id: params[:id])
+	@quiz_id = @question.quiz_id
   end
 
   # GET /save_question_attempt
@@ -52,11 +54,15 @@ class QuestionsController < ApplicationController
 
   # GET /questions/new
   def new
+	@quiz_id = params[:id]
     @question = Question.new
   end
 
   # GET /questions/1/edit
   def edit
+	@question = Question.find_by(id: params[:id])
+	@quiz_id = @question.quiz_id
+
   end
 
   # POST /questions
@@ -92,9 +98,10 @@ class QuestionsController < ApplicationController
   # DELETE /questions/1
   # DELETE /questions/1.json
   def destroy
+	@quiz_id = @question.quiz_id
     @question.destroy
     respond_to do |format|
-      format.html { redirect_to questions_url, notice: 'Question was successfully destroyed.' }
+      format.html { redirect_to questions_path(id: @quiz_id), notice: 'Question was successfully destroyed.' }
       format.json { head :no_content }
     end
   end

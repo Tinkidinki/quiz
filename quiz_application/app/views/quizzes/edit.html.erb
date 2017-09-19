@@ -2,5 +2,6 @@
 
 <%= render 'form', quiz: @quiz %>
 
+<%= link_to 'Edit questions' , questions_path(id: @quiz.id) %>
 <%= link_to 'Show', @quiz %> |
 <%= link_to 'Back', quizzes_path %>

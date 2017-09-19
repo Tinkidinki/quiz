@@ -26,15 +26,6 @@
     <%= form.password_field :password_confirmation, id: :user_password_confirmation %>
   </div>
 
-  <div class="field">
-    <%= form.label :total_score %>
-    <%= form.number_field :total_score, id: :user_total_score %>
-  </div>
-
-  <div class="field">
-    <%= form.label :admin %>
-    <%= form.check_box :admin, id: :user_admin %>
-  </div>
 
   <div class="actions">
     <%= form.submit %>

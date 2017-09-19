@@ -19,7 +19,6 @@
   <tbody>
     <% @questions.each do |question| %>
       <tr>
-        <td><%= question.quiz %></td>
         <td><%= question.question_statement %></td>
         <td><%= question.option_1 %></td>
         <td><%= question.option_2 %></td>
@@ -36,4 +35,5 @@
 
 <br>
 
-<%= link_to 'New Question', new_question_path %>
+<%= link_to 'New Question', new_question_path(id: params[:id]) %>|
+<%= link_to 'Back to Quizzes', quizzes_path(id: @quiz_id)%>
