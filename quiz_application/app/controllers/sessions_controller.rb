@@ -7,6 +7,7 @@ class SessionsController < ApplicationController
     if user.try(:authenticate, params[:password])
       session[:user_id] = user.id 
       session[:user_name] = user.name
+      session[:admin] = user.admin
       redirect_to "/quizzes"
     else
       redirect_to login_url, alert: "Invalid user/password combination"

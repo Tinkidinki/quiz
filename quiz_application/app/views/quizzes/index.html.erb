@@ -60,6 +60,9 @@
 <br>
 
 <% if @user.admin? %>
-  <%= link_to 'New Quiz', new_quiz_path %>
+  <%= link_to 'New Quiz ', new_quiz_path %>|
+  <%= link_to 'View Users', users_path%>
 <% end %>
 <%= button_to('Logout', '/logout', method:'delete')%>
+
+
