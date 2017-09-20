@@ -9,9 +9,17 @@
   </head>
 
   <body>
-    <p>
-      Welcome <%=session[:user_name]%>
-    </p>
-    <%= yield %>
+    <table>
+      <tbody>
+        <tr>
+          <td>
+            Welcome <%=session[:user_name]%>
+    
+            <%= yield %>
+            </td>
+          <td>
+            <img src="assets/brain.jpg", alt = "segd"  />
+          </td>
+
   </body>
 </html>
