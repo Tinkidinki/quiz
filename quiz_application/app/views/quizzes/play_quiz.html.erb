@@ -11,7 +11,7 @@
 </p>
 
 
-<%= @questions.each do |question|%>
+<% @questions.each do |question|%>
   <% @question_attempt = QuestionAttempt.where(question_id: question.id, user_id: session[:user_id]).first%>
   <% if @question_attempt
         @user_options = eval @question_attempt.user_options
@@ -19,9 +19,8 @@
       @user_options = []
 
     end %>
-  <!--%= form_tag(url_for_options: {controller: "questions" ,action: "save_question_attempt"} ,options: {method: "get"}) do%-->
-  <%= form_tag( save_question_attempt_path(id: question.id),{method: 'get'}) do %>
-    <%= label_tag question.question_statement%>
+   <%= form_tag( save_question_attempt_path(id: question.id),{method: 'get'}) do %>
+    <b> <%= label_tag question.question_statement%></b>
     <% if params[:done]%>
       CORRECT OPTION: <%= question.correct_options %>
       <br/>
@@ -41,12 +40,19 @@
 
     <% if @user_options.empty? %>
     <%= submit_tag 'Submit'%>
+    
     <%end%>
+
+    <br />
+    <br />
   
   <%end%>
 <%end%>
 
-<%=button_to("Back" , quizzes_path ,method: "get" ) %>
-<%=button_to("Done" , score_path(@quiz_attempt) ,method: "get" ) %>
+<%=button_to("Done" , score_path(@quiz_attempt) ,method: "get" ) %> 
+(Please click once you have submitted all solutions)
+<br /> <br />
+<%=link_to("Back" , quizzes_path ,method: "get" ) %>
+
 
   

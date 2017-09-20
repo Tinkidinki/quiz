@@ -29,7 +29,10 @@ class UsersController < ApplicationController
     respond_to do |format|
       if @user.save
         @user.total_score = 0
-        @user.admin = false
+
+        if  not @user.admin
+          @user.admin = false
+        end
         @user.save
 
         format.html { redirect_to @user, notice: 'User was successfully created.' }
